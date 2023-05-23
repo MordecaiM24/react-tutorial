@@ -6,30 +6,35 @@ import Main from './Pages/Main';
 import Personal from './Pages/Personal';
 import Friends  from './Pages/Friends';
 import FriendInfo from './Pages/FriendInfo';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const AppContext = createContext();
 
 function App() {
   const [username, setUsername] = useState("mordecai");
   const [friends, setFriends] = useState([]);
+  const queryClient = new QueryClient({});
 
 
   return (
     <div className="App">
-      <AppContext.Provider value={{ username, setUsername, friends, setFriends }}>
-        <Router>
+      <QueryClientProvider client={queryClient}>
+        <AppContext.Provider value={{ username, setUsername, friends, setFriends }}>
+          <Router>
 
-          <Navbar />
+            <Navbar />
 
-          <Routes>
-            <Route path="/" element={<Main/>} />
-            <Route path="/personal" element={<Personal/>} />
-            <Route path="/friends" element={<Friends/>} />
-            <Route path="/info" element={<FriendInfo/>} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Main/>} />
+              <Route path="/personal" element={<Personal/>} />
+              <Route path="/friends" element={<Friends/>} />
+              <Route path="/info" element={<FriendInfo/>} />
+              <Route path="/*" element={<div>Error</div>} />
+            </Routes>
 
-        </Router>
-      </AppContext.Provider>
+          </Router>
+        </AppContext.Provider>
+      </QueryClientProvider>
     </div>
   );
 }
