@@ -1,25 +1,21 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Contact } from "./Pages/Contact";
-import { Home } from "./Pages/Home";
-import { Login } from "./Pages/Login";
-import { Navbar } from "./Pages/Navbar";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Main } from "./pages/main";
+import { Login } from "./pages/login";
+import { Error } from "./pages/error";
+import { Navbar } from "./components/navbar";
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </Router>
-      </Provider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/*" element={<Error />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

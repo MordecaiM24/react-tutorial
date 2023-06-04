@@ -1,30 +1,19 @@
-import { useState } from "react";
-import { login, logout } from "../store";
-import { useDispatch, useSelector } from "react-redux";
+import { auth, provider } from "../config/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const [newUsername, setNewUsername] = useState<string>("");
+  const signInWithGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
+    navigate("/");
+  };
 
-  const dispatch = useDispatch();
-
-  const username = useSelector((state: any) => state.user.value.username);
+  const navigate = useNavigate();
 
   return (
     <div>
-      <h1>
-        This is the login page for {username}
-        <div style={{ display: "block" }}>
-          <input
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setNewUsername(event.target.value);
-            }}
-          />
-          <button onClick={() => dispatch(login({ username: newUsername }))}>
-            Submit Login
-          </button>
-          <button onClick={() => dispatch(logout())}>Logout</button>
-        </div>
-      </h1>
+      <p> Sign In With Google </p>
+      <button onClick={signInWithGoogle}> Sign In </button>
     </div>
   );
 };
